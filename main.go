@@ -32,7 +32,7 @@ type Robot struct {
 }
 
 func main() {
-	robot := Robot{0, 0, North}
+	robot := Robot{0, 0, South}
 	tabletop := Tabletop{0, 0, robot}
 	fmt.Println(tabletop.robot.facing.String())
 }
