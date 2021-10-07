@@ -2,37 +2,10 @@ package main
 
 import "fmt"
 
-type Facing int
-
-const (
-	North Facing = iota
-	East
-	South
-	West
-
-	MaxWidth  int = 5
-	MaxLength int = 5
-)
-
-// String representation of facing enum
-func (f Facing) String() string {
-	return [...]string{"North", "East", "South", "West"}[f]
-}
-
-type Tabletop struct {
-	width  int
-	length int
-	robot  Robot
-}
-
-type Robot struct {
-	xpos   int
-	ypos   int
-	facing Facing
-}
-
 func main() {
-	robot := Robot{0, 0, West}
-	tabletop := Tabletop{0, 0, robot}
-	fmt.Println(tabletop.robot.facing.String())
+	tabletop := Tabletop{5, 5}
+	robot := Robot{0, 0, West, tabletop}
+	fmt.Println(robot.Facing.String())
+	robot.turnLeft()
+	fmt.Println((robot.Facing))
 }
