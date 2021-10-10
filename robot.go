@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
 
 type Facing int
 
@@ -33,7 +36,7 @@ func (f Facing) String() string {
 type Tabletop struct {
 	width  int
 	length int
-	robot  Robot
+	robot  *Robot
 }
 
 type Robot struct {
@@ -46,8 +49,20 @@ type Robot struct {
 
 // }
 
+// Places a robot on the table given valid coordinates and facing
+func (t *Tabletop) PlaceRobot(xPos int, yPos int, facing Facing) error {
+	if xPos < XMin || yPos < YMin || xPos > XMax || yPos > YMax {
+		return errors.New("invalid robot coordinates")
+	} else if t.robot != nil {
+		return errors.New("robot has already been placed")
+	}
+
+	t.robot = &Robot{xPos: xPos, yPos: yPos, Facing: facing}
+	return nil
+}
+
 // Rotate the robot 90 degrees counter-clockwise
-func (t *Tabletop) turnRobotLeft() {
+func (t *Tabletop) TurnRobotLeft() {
 	if t.robot.Facing == North {
 		t.robot.Facing = West
 	} else {
@@ -56,7 +71,7 @@ func (t *Tabletop) turnRobotLeft() {
 }
 
 // Rotate the robot 90 degrees clockwise
-func (t *Tabletop) turnRobotRight() {
+func (t *Tabletop) TurnRobotRight() {
 	if t.robot.Facing == West {
 		t.robot.Facing = North
 	} else {
@@ -65,7 +80,7 @@ func (t *Tabletop) turnRobotRight() {
 }
 
 // Move the robot one unit in the direction it is facing
-func (t *Tabletop) moveRobot() {
+func (t *Tabletop) MoveRobot() {
 	if t.robot.Facing == North && t.robot.yPos != t.length {
 		t.robot.yPos++
 	} else if t.robot.Facing == East && t.robot.xPos != t.width {
@@ -78,6 +93,6 @@ func (t *Tabletop) moveRobot() {
 }
 
 // Report the location of the robot to stdout
-func (t *Tabletop) report() {
+func (t *Tabletop) Report() {
 	fmt.Printf("%d, %d, %s", t.robot.xPos, t.robot.yPos, t.robot.Facing.String())
 }
