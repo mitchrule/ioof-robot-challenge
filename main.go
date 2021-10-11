@@ -5,20 +5,26 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"strings"
 )
 
 func main() {
 	reader := bufio.NewReader(os.Stdin)
 	tabletop := Tabletop{width: XMax, length: YMax, robot: nil}
 
+	// Take input until a valid PLACE command is given
 	err := readPlaceCommand(reader, &tabletop)
 	for err != nil {
 		err = readPlaceCommand(reader, &tabletop)
 	}
 
-	fmt.Println(tabletop, tabletop.robot)
+	// Read MOVE and REPORT commands
+	for {
+		readRobotInput(reader, &tabletop)
+	}
 }
 
+// Read the initial PLACE command and position robot on table
 func readPlaceCommand(r *bufio.Reader, t *Tabletop) error {
 	var (
 		command   string
@@ -57,4 +63,22 @@ func readPlaceCommand(r *bufio.Reader, t *Tabletop) error {
 	}
 
 	return nil
+}
+
+// Read LEFT, RIGHT, MOVE and REPORT commands
+func readRobotInput(r *bufio.Reader, t *Tabletop) {
+	var command string
+
+	fmt.Fscanf(r, "%s", &command)
+	command = strings.Trim(command, " ")
+
+	if command == "MOVE" {
+		t.MoveRobot()
+	} else if command == "LEFT" {
+		t.TurnRobotLeft()
+	} else if command == "RIGHT" {
+		t.TurnRobotRight()
+	} else if command == "REPORT" {
+		t.Report()
+	}
 }

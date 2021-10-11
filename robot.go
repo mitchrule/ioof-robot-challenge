@@ -85,14 +85,14 @@ func (t *Tabletop) MoveRobot() {
 		t.robot.yPos++
 	} else if t.robot.Facing == East && t.robot.xPos != t.width {
 		t.robot.xPos++
-	} else if t.robot.Facing == South && t.robot.yPos == YMin {
+	} else if t.robot.Facing == South && t.robot.yPos != YMin {
 		t.robot.yPos--
-	} else if t.robot.Facing == West && t.robot.xPos == XMin {
+	} else if t.robot.Facing == West && t.robot.xPos != XMin {
 		t.robot.xPos--
 	}
 }
 
 // Report the location of the robot to stdout
 func (t *Tabletop) Report() {
-	fmt.Printf("%d, %d, %s", t.robot.xPos, t.robot.yPos, t.robot.Facing.String())
+	fmt.Printf("%d, %d, %s\n", t.robot.xPos, t.robot.yPos, t.robot.Facing.String())
 }
