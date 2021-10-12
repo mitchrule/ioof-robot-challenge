@@ -34,9 +34,11 @@ func (f Facing) String() string {
 // }
 
 type Tabletop struct {
-	width  int
-	length int
-	robot  *Robot
+	xMin  int
+	yMin  int
+	xMax  int
+	yMax  int
+	robot *Robot
 }
 
 type Robot struct {
@@ -51,7 +53,7 @@ type Robot struct {
 
 // Places a robot on the table given valid coordinates and facing
 func (t *Tabletop) PlaceRobot(xPos int, yPos int, facing Facing) error {
-	if xPos < XMin || yPos < YMin || xPos > XMax || yPos > YMax {
+	if xPos < t.xMin || yPos < t.yMin || xPos > t.xMax || yPos > t.yMax {
 		return errors.New("invalid robot coordinates")
 	} else if t.robot != nil {
 		return errors.New("robot has already been placed")
@@ -81,13 +83,13 @@ func (t *Tabletop) TurnRobotRight() {
 
 // Move the robot one unit in the direction it is facing
 func (t *Tabletop) MoveRobot() {
-	if t.robot.Facing == North && t.robot.yPos != t.length {
+	if t.robot.Facing == North && t.robot.yPos != t.yMax {
 		t.robot.yPos++
-	} else if t.robot.Facing == East && t.robot.xPos != t.width {
+	} else if t.robot.Facing == East && t.robot.xPos != t.xMax {
 		t.robot.xPos++
-	} else if t.robot.Facing == South && t.robot.yPos != YMin {
+	} else if t.robot.Facing == South && t.robot.yPos != t.yMin {
 		t.robot.yPos--
-	} else if t.robot.Facing == West && t.robot.xPos != XMin {
+	} else if t.robot.Facing == West && t.robot.xPos != t.xMin {
 		t.robot.xPos--
 	}
 }

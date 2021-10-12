@@ -10,7 +10,7 @@ import (
 
 func main() {
 	reader := bufio.NewReader(os.Stdin)
-	tabletop := Tabletop{width: XMax, length: YMax, robot: nil}
+	tabletop := Tabletop{xMin: XMin, yMin: YMin, xMax: XMax, yMax: YMax, robot: nil}
 
 	// Take input until a valid PLACE command is given
 	err := readPlaceCommand(reader, &tabletop)
