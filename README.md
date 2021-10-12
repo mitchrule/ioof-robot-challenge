@@ -1,7 +1,7 @@
 # IOOF Robot Challenge - Mitch Rule (October 2021)
 
 ## Compiling
-The Go compiler is required to build this project. It can be downloaded [here](https://golang.org/dl/)
+The Go compiler is required to build this project. It can be downloaded [here](https://golang.org/dl/).
 
 After installing the Go compiler, clone this project and run the following from the root directory.
 
